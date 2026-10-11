@@ -30,10 +30,19 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully'
+            emailext(
+                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Jenkins pipeline completed successfully.\nJob: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nCheck: ${env.BUILD_URL}",
+                to: "rahitya1708@gmail.com"
+            )
         }
+
         failure {
-            echo 'Pipeline failed. Check Console Output.'
+            emailext(
+                subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Jenkins pipeline failed.\nJob: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nCheck: ${env.BUILD_URL}",
+                to: "rahitya1708@gmail.com"
+            )
         }
     }
 }
